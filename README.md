@@ -1,6 +1,6 @@
 # duluthalternsideparking.com
 
-The repository for duluthalternatesideparking.com
+The repository for [duluthalternatesideparking.com](https://duluthalternatesideparking.com)
 
 ## What
 
