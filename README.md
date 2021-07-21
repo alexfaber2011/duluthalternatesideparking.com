@@ -21,8 +21,8 @@ Perhaps this is too presumptious, but, in the event that someone is inspired to 
 
 ### TODO
 
-- [] Add favicon so that, if folks save this to their mobile home screen, it looks nice
-- [] Add more information about the transition period between 4:00pm and 8:00pm on Sundays
-- [] Add schedule beyond October 2021
-- [] (optional) Style a little more (_remember that thing about the "the best machine..." above in
+- [  ] Add favicon so that, if folks save this to their mobile home screen, it looks nice
+- [  ] Add more information about the transition period between 4:00pm and 8:00pm on Sundays
+- [  ] Add schedule beyond October 2021
+- [  ] (optional) Style a little more (_remember that thing about the "the best machine..." above in
   the "Why?" section?_)

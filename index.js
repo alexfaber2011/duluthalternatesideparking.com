@@ -27,10 +27,13 @@ function writeDate(date) {
 
 function writeSide(date) {
   var elem = document.getElementById('side');
+  var eitherInfoElem = document.getElementById('either-side-info');
   if (isEither(date)) {
-    elem.innerHTML = 'either';
+    elem.innerHTML = 'even or odd';
+    eitherInfoElem.innerHTML = 'until 8pm.  Then park on the ' + (isOdd(date) ? 'odd' : 'even') + ' side.';
   } else {
     elem.innerHTML = isOdd(date) ? 'odd' : 'even';
+    eitherInfoElem.innerHTML = null;
   }
 }
 
