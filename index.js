@@ -30,6 +30,7 @@ function writeSide(date) {
   var eitherInfoElem = document.getElementById('either-side-info');
   if (isEither(date)) {
     elem.innerHTML = 'even or odd';
+    // TODO - this isn't quite right.  Need to fix Sunday logic
     eitherInfoElem.innerHTML = 'until 8pm.  Then park on the ' + (isOdd(date) ? 'odd' : 'even') + ' side.';
   } else {
     elem.innerHTML = isOdd(date) ? 'odd' : 'even';
