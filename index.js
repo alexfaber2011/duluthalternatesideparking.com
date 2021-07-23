@@ -12,12 +12,20 @@ function isOdd(date) {
   return ODD_DAYS[month].includes(dayOfMonth);
 }
 
-function isEither(date) {
+function isWithinTransitionPeriod(date) {
   var isSunday = date.getDay() === 0;
   if (!isSunday) return false;
 
   var hour = date.getHours();
   return (hour >= 16 && hour < 20);
+}
+
+function isSundayAfterTransitionPeriod(date) {
+  var isSunday = date.getDay() === 0;
+  if (!isSunday) return false;
+
+  var hour = date.getHours();
+  return hour >= 20;
 }
 
 function writeDate(date) {
@@ -26,14 +34,19 @@ function writeDate(date) {
 }
 
 function writeSide(date) {
-  var elem = document.getElementById('side');
+  var sideElem = document.getElementById('side');
   var eitherInfoElem = document.getElementById('either-side-info');
-  if (isEither(date)) {
-    elem.innerHTML = 'even or odd';
-    // TODO - this isn't quite right.  Need to fix Sunday logic
-    eitherInfoElem.innerHTML = 'until 8pm.  Then park on the ' + (isOdd(date) ? 'odd' : 'even') + ' side.';
+  if (isSundayAfterTransitionPeriod(date)) {
+    // After transition period, the side flips from what it was in the morning
+    sideElem.innerHTML = isOdd(date) ? 'even' : 'odd';
+    eitherInfoElem = null;
+  } else if (isWithinTransitionPeriod(date)) {
+    sideElem.innerHTML = 'even or odd';
+    // After transition period, the side flips from what it was in the morning
+    var side = isOdd(date) ? 'even' : 'odd';
+    eitherInfoElem.innerHTML = 'until 8pm.  Then park on the ' + side + ' side.';
   } else {
-    elem.innerHTML = isOdd(date) ? 'odd' : 'even';
+    sideElem.innerHTML = isOdd(date) ? 'odd' : 'even';
     eitherInfoElem.innerHTML = null;
   }
 }

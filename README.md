@@ -21,7 +21,7 @@ Perhaps this is too presumptious, but, in the event that someone is inspired to 
 
 ### TODO
 
-- [ ] Fix Sunday logic
+- [x] Fix Sunday logic
 - [ ] Add favicon so that, if folks save this to their mobile home screen, it looks nice
 - [ ] Add more information about the transition period between 4:00pm and 8:00pm on Sundays
 - [ ] Add schedule beyond October 2021
