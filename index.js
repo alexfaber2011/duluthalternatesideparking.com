@@ -1,15 +1,15 @@
 // zero-th based months.  6 = July
 var ODD_DAYS = {
-  6: [1,2,3,4,12,13,14,15,16,17,18,26,27,28,29,30],
-  7: [1,9,10,11,12,13,14,15,23,24,25,26,27,28,29],
-  8: [6,7,8,9,10,11,12,20,21,22,23,24,25,26],
-  9: [4,5,6,7,8,9,10,18,19,20,21,22,23,24]
+  6: new Set([1,2,3,4,12,13,14,15,16,17,18,26,27,28,29,30]),
+  7: new Set([1,9,10,11,12,13,14,15,23,24,25,26,27,28,29]),
+  8: new Set([6,7,8,9,10,11,12,20,21,22,23,24,25,26]),
+  9: new Set([4,5,6,7,8,9,10,18,19,20,21,22,23,24])
 }
 
 function isOdd(date) {
   var month = date.getMonth();
   var dayOfMonth = date.getDate();
-  return ODD_DAYS[month].includes(dayOfMonth);
+  return ODD_DAYS[month].has(dayOfMonth);
 }
 
 function isWithinTransitionPeriod(date) {
