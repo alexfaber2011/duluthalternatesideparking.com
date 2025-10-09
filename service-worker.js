@@ -1,44 +1,12 @@
-const CACHE_NAME = 'duluth-parking-v1';
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/index.js',
-  'https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css'
-];
+const CACHE_NAME = 'duluth-parking-v2';
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(function(cache) {
-        return cache.addAll(urlsToCache);
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    fetch(e.request)
+      .then(r => {
+        caches.open(CACHE_NAME).then(c => c.put(e.request, r.clone()));
+        return r;
       })
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      }
-    )
-  );
-});
-
-self.addEventListener('activate', function(event) {
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+      .catch(() => caches.match(e.request))
   );
 });
