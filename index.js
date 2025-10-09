@@ -37,9 +37,12 @@ function isSundayAfterTransitionPeriod(date) {
 }
 
 function writeDate(date) {
-  var elem = document.getElementById('today');
-  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  elem.innerHTML = date.toLocaleDateString('en-US', options);
+  var dateElem = document.getElementById('today');
+  var timeElem = document.getElementById('time');
+  var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  var timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit' };
+  dateElem.innerHTML = date.toLocaleDateString('en-US', dateOptions);
+  timeElem.innerHTML = date.toLocaleTimeString('en-US', timeOptions);
 }
 
 function getCountdownText(date) {

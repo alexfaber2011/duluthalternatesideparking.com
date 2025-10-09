@@ -1,12 +1,19 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Alternate Side Parking - Duluth, MN</title>
-    <meta name="description" content="Find out which side of the street to park on in Duluth, MN">
-    <meta name="theme-color" content="#1095c1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
-    <link rel="manifest" href="manifest.json">
+    <meta
+      name="description"
+      content="Find out which side of the street to park on in Duluth, MN"
+    />
+    <meta name="theme-color" content="#1095c1" />
+    <link rel="icon" type="image/svg+xml" href="icon.svg" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <link rel="manifest" href="manifest.json" />
     <style>
       .parking-side {
         font-size: 3rem;
@@ -35,11 +42,14 @@
       }
       .date-display {
         text-align: center;
-        margin-bottom: 2rem;
       }
       footer {
         text-align: center;
         margin-top: 3rem;
+      }
+      #time {
+        text-align: center;
+        font-size: 0.8rem;
       }
     </style>
   </head>
@@ -49,6 +59,7 @@
         <header>
           <h1>Alternate Side Parking</h1>
           <p class="date-display">Duluth, MN - <span id="today"></span></p>
+          <p id="time"></p>
         </header>
 
         <noscript>
@@ -67,14 +78,19 @@
           <p>
             <small>
               Based on the official
-              <a href="https://duluthmn.gov/media/c3qfqwg4/parking-calendar.pdf">
+              <a
+                href="https://duluthmn.gov/media/c3qfqwg4/parking-calendar.pdf"
+              >
                 parking calendar
               </a>
             </small>
           </p>
           <p>
             <small>
-              <a href="https://github.com/alexfaber2011/duluthalternatesideparking.com">View on GitHub</a>
+              <a
+                href="https://github.com/alexfaber2011/duluthalternatesideparking.com"
+                >View on GitHub</a
+              >
             </small>
           </p>
         </footer>
@@ -82,8 +98,8 @@
     </main>
     <script src="index.js"></script>
     <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js');
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("service-worker.js");
       }
     </script>
   </body>
