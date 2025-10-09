@@ -1,29 +1,90 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Alternate Side Parking - Duluth, MN</title>
+    <meta name="description" content="Find out which side of the street to park on in Duluth, MN">
+    <meta name="theme-color" content="#1095c1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="manifest" href="manifest.json">
+    <style>
+      .parking-side {
+        font-size: 3rem;
+        font-weight: bold;
+        text-align: center;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 0.5rem;
+      }
+      .parking-side.odd {
+        background-color: var(--pico-primary-background);
+        color: var(--pico-primary-inverse);
+      }
+      .parking-side.even {
+        background-color: var(--pico-secondary-background);
+        color: var(--pico-secondary-inverse);
+      }
+      .parking-side.either {
+        background-color: var(--pico-contrast-background);
+        color: var(--pico-contrast-inverse);
+      }
+      .countdown {
+        font-size: 1.25rem;
+        text-align: center;
+        margin: 1rem 0;
+      }
+      .date-display {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      footer {
+        text-align: center;
+        margin-top: 3rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>Alternate Side Parking - Duluth, MN</h1>
-    <p>
-      Find out which side of the street to park on based on the current
-      <a href="https://duluthmn.gov/media/c3qfqwg4/parking-calendar.pdf">
-        alternate side parking rules.
-      </a>
-    </p>
-    <noscript>
-      <p style="font-weight: bold; color: maroon">
-        Unfortunately, you need to enable Javascript for this site to work.
-      </p>
-    </noscript>
-    <h2>Today: <span id="today"></span></h2>
-    <p>
-      Park on the side of the street with 
-      <span id="side" style="font-weight: bold;"></span> house numbers
-      <span id="either-side-info"></span>
-    </p>
-    <a href="https://github.com/alexfaber2011/duluthalternatesideparking.com">Github</a>
+    <main class="container">
+      <article>
+        <header>
+          <h1>Alternate Side Parking</h1>
+          <p class="date-display">Duluth, MN - <span id="today"></span></p>
+        </header>
+
+        <noscript>
+          <p style="font-weight: bold; color: maroon">
+            Unfortunately, you need to enable Javascript for this site to work.
+          </p>
+        </noscript>
+
+        <section>
+          <h2>Park on the side with:</h2>
+          <div id="side" class="parking-side"></div>
+          <p id="either-side-info" class="countdown"></p>
+        </section>
+
+        <footer>
+          <p>
+            <small>
+              Based on the official
+              <a href="https://duluthmn.gov/media/c3qfqwg4/parking-calendar.pdf">
+                parking calendar
+              </a>
+            </small>
+          </p>
+          <p>
+            <small>
+              <a href="https://github.com/alexfaber2011/duluthalternatesideparking.com">View on GitHub</a>
+            </small>
+          </p>
+        </footer>
+      </article>
+    </main>
+    <script src="index.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js');
+      }
+    </script>
   </body>
-  <script src="index.js"></script>
 </html>

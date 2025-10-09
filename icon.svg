@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <clipPath id="roundedCorners">
+      <rect x="0" y="0" width="512" height="512" rx="80"/>
+    </clipPath>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3be282;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#27ae60;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3db8e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d7ea3;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="buttonShine" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.15" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+    <radialGradient id="recessedShadow" cx="45%" cy="45%" r="50%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0" />
+      <stop offset="85%" style="stop-color:#000000;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.08" />
+    </radialGradient>
+    <filter id="innerShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="1" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.15"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="textShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feFlood flood-color="#000000" flood-opacity="0.3"/>
+      <feComposite in2="offsetblur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <path id="circlePathTop" d="M 70,280 A 186,186 0 0,1 442,280"/>
+    <path id="circlePathBottom" d="M 70,280 A 186,186 0 0,0 442,280"/>
+  </defs>
+
+  <g clip-path="url(#roundedCorners)">
+    <!-- Left side - ODD (Green) -->
+    <rect x="0" y="0" width="256" height="512" fill="url(#greenGradient)"/>
+
+    <!-- Right side - EVEN (Blue) -->
+    <rect x="256" y="0" width="256" height="512" fill="url(#blueGradient)"/>
+
+    <!-- Button shine overlay -->
+    <rect x="0" y="0" width="512" height="512" fill="url(#buttonShine)"/>
+
+    <!-- Center divider line -->
+    <line x1="256" y1="0" x2="256" y2="512" stroke="#ffffff" stroke-width="4" opacity="0.3"/>
+  </g>
+
+  <!-- Parking Icon (P in circle) - Large background element with recessed effect -->
+  <g filter="url(#innerShadow)">
+    <circle cx="256" cy="280" r="150" fill="#000000" opacity="0.06"/>
+    <circle cx="256" cy="280" r="150" fill="url(#recessedShadow)"/>
+  </g>
+  <circle cx="256" cy="280" r="150" fill="#ffffff" opacity="0.15"/>
+  <text x="256" y="360" font-family="Arial, sans-serif" font-size="220" font-weight="bold" fill="#ffffff" opacity="0.45" text-anchor="middle" filter="url(#innerShadow)">P</text>
+
+  <!-- Circular text around parking icon - Top half -->
+  <text font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" letter-spacing="3" filter="url(#textShadow)">
+    <textPath href="#circlePathTop" startOffset="50%" text-anchor="middle">
+      DULUTH ALTERNATE
+    </textPath>
+  </text>
+
+  <!-- Circular text around parking icon - Bottom half -->
+  <text font-family="Arial, sans-serif" font-size="42" font-weight="bold" fill="#ffffff" letter-spacing="3" filter="url(#textShadow)">
+    <textPath href="#circlePathBottom" startOffset="50%" text-anchor="middle">
+      SIDE PARKING
+    </textPath>
+  </text>
+</svg>

@@ -38,24 +38,56 @@ function isSundayAfterTransitionPeriod(date) {
 
 function writeDate(date) {
   var elem = document.getElementById('today');
-  elem.innerHTML = date.toLocaleString();
+  var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  elem.innerHTML = date.toLocaleDateString('en-US', options);
+}
+
+function getCountdownText(date) {
+  var transitionEndTime = new Date(date);
+  transitionEndTime.setHours(20, 0, 0, 0);
+
+  var diff = transitionEndTime - date;
+  var hours = Math.floor(diff / (1000 * 60 * 60));
+  var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+  var timeText = '';
+  if (hours > 0) {
+    timeText += hours + ' hour' + (hours !== 1 ? 's' : '') + ' ';
+  }
+  if (minutes > 0 || hours > 0) {
+    timeText += minutes + ' minute' + (minutes !== 1 ? 's' : '') + ' ';
+  }
+  timeText += seconds + ' second' + (seconds !== 1 ? 's' : '');
+
+  return timeText;
 }
 
 function writeSide(date) {
   var sideElem = document.getElementById('side');
   var eitherInfoElem = document.getElementById('either-side-info');
+
+  // Remove all classes
+  sideElem.className = 'parking-side';
+
   if (isSundayAfterTransitionPeriod(date)) {
     // After transition period, the side flips from what it was in the morning
-    sideElem.innerHTML = isOdd(date) ? 'even' : 'odd';
-    eitherInfoElem = null;
+    var side = isOdd(date) ? 'EVEN' : 'ODD';
+    sideElem.innerHTML = side + ' house numbers';
+    sideElem.classList.add(side.toLowerCase());
+    eitherInfoElem.innerHTML = '';
   } else if (isWithinTransitionPeriod(date)) {
-    sideElem.innerHTML = 'even or odd';
+    sideElem.innerHTML = 'EVEN or ODD house numbers';
+    sideElem.classList.add('either');
     // After transition period, the side flips from what it was in the morning
-    var side = isOdd(date) ? 'even' : 'odd';
-    eitherInfoElem.innerHTML = 'until 8pm.  Then park on the ' + side + ' side.';
+    var nextSide = isOdd(date) ? 'EVEN' : 'ODD';
+    var countdown = getCountdownText(date);
+    eitherInfoElem.innerHTML = '<strong>' + countdown + '</strong> until switch to <strong>' + nextSide + '</strong> side';
   } else {
-    sideElem.innerHTML = isOdd(date) ? 'odd' : 'even';
-    eitherInfoElem.innerHTML = null;
+    var side = isOdd(date) ? 'ODD' : 'EVEN';
+    sideElem.innerHTML = side + ' house numbers';
+    sideElem.classList.add(side.toLowerCase());
+    eitherInfoElem.innerHTML = '';
   }
 }
 
