@@ -42,6 +42,8 @@
       }
       .date-display {
         text-align: center;
+        padding: 0;
+        margin: 0;
       }
       footer {
         text-align: center;
@@ -50,6 +52,8 @@
       #time {
         text-align: center;
         font-size: 0.8rem;
+        padding: 0;
+        margin: 0;
       }
     </style>
   </head>
@@ -77,6 +81,15 @@
         <footer>
           <p>
             <small>
+              <a
+                href="#"
+                onclick="document.getElementById('install-dialog').showModal(); return false;"
+                >📱 Add to Home Screen</a
+              >
+            </small>
+          </p>
+          <p>
+            <small>
               Based on the official
               <a
                 href="https://duluthmn.gov/media/c3qfqwg4/parking-calendar.pdf"
@@ -96,6 +109,57 @@
         </footer>
       </article>
     </main>
+
+    <dialog id="install-dialog">
+      <article style="max-width: 600px; margin: 0">
+        <header>
+          <button
+            aria-label="Close"
+            rel="prev"
+            onclick="document.getElementById('install-dialog').close()"
+            style="float: right; cursor: pointer"
+          ></button>
+          <h2>Install to Home Screen</h2>
+          <p>Add this app to your phone's home screen for quick access.</p>
+        </header>
+
+        <section>
+          <h3>📱 iOS (iPhone/iPad)</h3>
+          <ol>
+            <li>Open this page in <strong>Safari</strong> (not Chrome)</li>
+            <li>
+              Tap the <strong>Share</strong> button
+              <span style="font-size: 1.2rem">⎵</span> at the bottom
+            </li>
+            <li>Scroll down and tap <strong>"Add to Home Screen"</strong></li>
+            <li>Tap <strong>"Add"</strong> in the top-right corner</li>
+          </ol>
+        </section>
+
+        <section>
+          <h3>🤖 Android</h3>
+          <ol>
+            <li>Open this page in <strong>Chrome</strong></li>
+            <li>Tap the <strong>menu</strong> button (⋮) in the top-right</li>
+            <li>
+              Tap <strong>"Add to Home screen"</strong> or
+              <strong>"Install app"</strong>
+            </li>
+            <li>
+              Tap <strong>"Add"</strong> or <strong>"Install"</strong> to
+              confirm
+            </li>
+          </ol>
+        </section>
+
+        <footer>
+          <button onclick="document.getElementById('install-dialog').close()">
+            Close
+          </button>
+        </footer>
+      </article>
+    </dialog>
+
     <script src="index.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
