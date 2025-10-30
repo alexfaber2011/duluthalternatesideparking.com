@@ -1,23 +1,36 @@
-// zero-th based months.  6 = July
-var ODD_DAYS = {
-  10: new Set([1,2,3,11,12,13,14,15,16,17,25,26,27,28,29,30]),  // November
-  11: new Set([1,9,10,11,12,13,14,15,23,24,25,26,27,28,29]),    // December
-  0: new Set([6,7,8,9,10,11,12,20,21,22,23,24,25,26]),          // January
-  1: new Set([3,4,5,6,7,8,9,17,18,19,20,21,22,23]),             // February
-  2: new Set([3,4,5,6,7,8,9,17,18,19,20,21,22,23,31]),          // March
-  3: new Set([1,2,3,4,5,6,14,15,16,17,18,19,20,28,29,30]),      // April
-  4: new Set([1,2,3,4,12,13,14,15,16,17,18,26,27,28,29,30,31]), // May
-  5: new Set([1,9,10,11,12,13,14,15,23,24,25,26,27,28,29]),     // June
-  6: new Set([7,8,9,10,11,12,13,21,22,23,24,25,26,27]),         // July
-  7: new Set([4,5,6,7,8,9,10,18,19,20,21,22,23,24]),            // August
-  8: new Set([1,2,3,4,5,6,7,15,16,17,18,19,20,21,29,30]),       // September
-  9: new Set([1,2,3,4,5,13,14,15,16,17,18,19,27,28,29,30,31]),  // October
+// November 1st 2024 is the start of an ODD week (week 1)
+// Weeks run Monday-Sunday
+// Calculate week number based on weeks elapsed since Nov 1, 2024
+function getWeeksSinceNov1(date) {
+  var nov1_2024 = new Date(2024, 10, 1); // Nov 1, 2024
+
+  // Get Monday of the week containing the given date
+  var dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+  var daysFromMonday = (dayOfWeek === 0) ? 6 : dayOfWeek - 1; // Sunday counts as 6 days after Monday
+  var mondayOfCurrentWeek = new Date(date);
+  mondayOfCurrentWeek.setDate(date.getDate() - daysFromMonday);
+  mondayOfCurrentWeek.setHours(0, 0, 0, 0);
+
+  // Get Monday of the week containing Nov 1, 2024 (which was a Friday)
+  // Nov 1, 2024 is a Friday, so its Monday is Oct 28, 2024
+  var nov1DayOfWeek = nov1_2024.getDay(); // 5 (Friday)
+  var daysFromMondayNov1 = (nov1DayOfWeek === 0) ? 6 : nov1DayOfWeek - 1; // 4 days
+  var mondayOfNov1Week = new Date(nov1_2024);
+  mondayOfNov1Week.setDate(nov1_2024.getDate() - daysFromMondayNov1);
+  mondayOfNov1Week.setHours(0, 0, 0, 0);
+
+  // Calculate weeks between these Mondays
+  var weeksDiff = Math.round((mondayOfCurrentWeek - mondayOfNov1Week) / (7 * 24 * 60 * 60 * 1000));
+
+  return weeksDiff;
 }
 
 function isOdd(date) {
-  var month = date.getMonth();
-  var dayOfMonth = date.getDate();
-  return ODD_DAYS[month].has(dayOfMonth);
+  var weeksDiff = getWeeksSinceNov1(date);
+  // Nov 1, 2024 week (week 0) is ODD
+  // If weeksDiff is even (0, 2, 4...), it's an ODD week
+  // If weeksDiff is odd (1, 3, 5...), it's an EVEN week
+  return weeksDiff % 2 === 0;
 }
 
 function isWithinTransitionPeriod(date) {
