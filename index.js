@@ -1,121 +1,105 @@
-// November 1st 2024 is the start of an ODD week (week 1)
-// Weeks run Monday-Sunday
-// Calculate week number based on weeks elapsed since Nov 1, 2024
-function getWeeksSinceNov1(date) {
-  var nov1_2024 = new Date(2024, 10, 1); // Nov 1, 2024
+// Alternate Side Parking logic (modern ES6+)
+const NOV_1_2024 = new Date(2024, 10, 1); // November 1, 2024
+const TRANSITION_START_HOUR = 16; // 4 PM
+const TRANSITION_END_HOUR = 20;   // 8 PM
+const SUNDAY = 0;
 
-  // Get Monday of the week containing the given date
-  var dayOfWeek = date.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
-  var daysFromMonday = (dayOfWeek === 0) ? 6 : dayOfWeek - 1; // Sunday counts as 6 days after Monday
-  var mondayOfCurrentWeek = new Date(date);
-  mondayOfCurrentWeek.setDate(date.getDate() - daysFromMonday);
-  mondayOfCurrentWeek.setHours(0, 0, 0, 0);
+/** Calculate weeks since the Monday of the week containing Nov 1 2024 */
+const getWeeksSinceNov1 = (date) => {
+  // Monday of the week containing the given date
+  const dayOfWeek = date.getDay(); // 0=Sun … 6=Sat
+  const daysFromMonday = dayOfWeek === SUNDAY ? 6 : dayOfWeek - 1;
+  const mondayCurrent = new Date(date);
+  mondayCurrent.setDate(date.getDate() - daysFromMonday);
+  mondayCurrent.setHours(0, 0, 0, 0);
 
-  // Get Monday of the week containing Nov 1, 2024 (which was a Friday)
-  // Nov 1, 2024 is a Friday, so its Monday is Oct 28, 2024
-  var nov1DayOfWeek = nov1_2024.getDay(); // 5 (Friday)
-  var daysFromMondayNov1 = (nov1DayOfWeek === 0) ? 6 : nov1DayOfWeek - 1; // 4 days
-  var mondayOfNov1Week = new Date(nov1_2024);
-  mondayOfNov1Week.setDate(nov1_2024.getDate() - daysFromMondayNov1);
-  mondayOfNov1Week.setHours(0, 0, 0, 0);
+  // Monday of the week containing Nov 1 2024 (which was a Friday)
+  const novDay = NOV_1_2024.getDay();
+  const daysFromMondayNov = novDay === SUNDAY ? 6 : novDay - 1;
+  const mondayNov = new Date(NOV_1_2024);
+  mondayNov.setDate(NOV_1_2024.getDate() - daysFromMondayNov);
+  mondayNov.setHours(0, 0, 0, 0);
 
-  // Calculate weeks between these Mondays
-  var weeksDiff = Math.round((mondayOfCurrentWeek - mondayOfNov1Week) / (7 * 24 * 60 * 60 * 1000));
+  const diffMs = mondayCurrent - mondayNov;
+  return Math.floor(diffMs / (7 * 24 * 60 * 60 * 1000));
+};
 
-  return weeksDiff;
-}
+/** Determine if the current week is an ODD week (starting from Nov 1 2024) */
+const isOddWeek = (date) => getWeeksSinceNov1(date) % 2 === 0;
 
-function isOdd(date) {
-  var weeksDiff = getWeeksSinceNov1(date);
-  // Nov 1, 2024 week (week 0) is ODD
-  // If weeksDiff is even (0, 2, 4...), it's an ODD week
-  // If weeksDiff is odd (1, 3, 5...), it's an EVEN week
-  return weeksDiff % 2 === 0;
-}
+/** True if we are in the Sunday transition window (4 PM‑8 PM) */
+const isWithinTransitionPeriod = (date) =>
+  date.getDay() === SUNDAY &&
+  date.getHours() >= TRANSITION_START_HOUR &&
+  date.getHours() < TRANSITION_END_HOUR;
 
-function isWithinTransitionPeriod(date) {
-  var isSunday = date.getDay() === 0;
-  if (!isSunday) return false;
+/** True if it is Sunday after the transition period (>= 8 PM) */
+const isSundayAfterTransitionPeriod = (date) =>
+  date.getDay() === SUNDAY && date.getHours() >= TRANSITION_END_HOUR;
 
-  var hour = date.getHours();
-  return (hour >= 16 && hour < 20);
-}
+/** Write current date and time into the page */
+const writeDate = (date) => {
+  const dateElem = document.getElementById('today');
+  const timeElem = document.getElementById('time');
+  const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit' };
+  dateElem.textContent = date.toLocaleDateString('en-US', dateOptions);
+  timeElem.textContent = date.toLocaleTimeString('en-US', timeOptions);
+};
 
-function isSundayAfterTransitionPeriod(date) {
-  var isSunday = date.getDay() === 0;
-  if (!isSunday) return false;
+/** Build a human‑readable countdown string */
+const getCountdownText = (now) => {
+  const end = new Date(now);
+  end.setHours(TRANSITION_END_HOUR, 0, 0, 0);
+  const diff = Math.max(0, end - now);
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+  const parts = [];
+  if (h > 0) parts.push(`${h} hour${h !== 1 ? 's' : ''}`);
+  if (m > 0 || h > 0) parts.push(`${m} minute${m !== 1 ? 's' : ''}`);
+  parts.push(`${s} second${s !== 1 ? 's' : ''}`);
+  return parts.join(' ');
+};
 
-  var hour = date.getHours();
-  return hour >= 20;
-}
-
-function writeDate(date) {
-  var dateElem = document.getElementById('today');
-  var timeElem = document.getElementById('time');
-  var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  var timeOptions = { hour: 'numeric', minute: '2-digit', second: '2-digit' };
-  dateElem.innerHTML = date.toLocaleDateString('en-US', dateOptions);
-  timeElem.innerHTML = date.toLocaleTimeString('en-US', timeOptions);
-}
-
-function getCountdownText(date) {
-  var transitionEndTime = new Date(date);
-  transitionEndTime.setHours(20, 0, 0, 0);
-
-  var diff = transitionEndTime - date;
-  var hours = Math.floor(diff / (1000 * 60 * 60));
-  var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-  var timeText = '';
-  if (hours > 0) {
-    timeText += hours + ' hour' + (hours !== 1 ? 's' : '') + ' ';
-  }
-  if (minutes > 0 || hours > 0) {
-    timeText += minutes + ' minute' + (minutes !== 1 ? 's' : '') + ' ';
-  }
-  timeText += seconds + ' second' + (seconds !== 1 ? 's' : '');
-
-  return timeText;
-}
-
-function writeSide(date) {
-  var sideElem = document.getElementById('side');
-  var eitherInfoElem = document.getElementById('either-side-info');
-
-  // Remove all classes
+/** Update the side display based on the current date */
+const writeSide = (date) => {
+  const sideElem = document.getElementById('side');
+  const eitherInfoElem = document.getElementById('either-side-info');
   sideElem.className = 'parking-side';
 
   if (isSundayAfterTransitionPeriod(date)) {
-    // After transition period, the side flips from what it was in the morning
-    var side = isOdd(date) ? 'EVEN' : 'ODD';
-    sideElem.innerHTML = side + ' house numbers';
+    // After transition, the side flips from the morning value
+    const side = isOddWeek(date) ? 'EVEN' : 'ODD';
+    sideElem.textContent = `${side} house numbers`;
     sideElem.classList.add(side.toLowerCase());
-    eitherInfoElem.innerHTML = '';
+    eitherInfoElem.textContent = '';
   } else if (isWithinTransitionPeriod(date)) {
-    sideElem.innerHTML = 'EVEN or ODD house numbers';
+    sideElem.textContent = 'EVEN or ODD house numbers';
     sideElem.classList.add('either');
-    // After transition period, the side flips from what it was in the morning
-    var nextSide = isOdd(date) ? 'EVEN' : 'ODD';
-    var countdown = getCountdownText(date);
-    eitherInfoElem.innerHTML = '<strong>' + countdown + '</strong> until switch to <strong>' + nextSide + '</strong> side';
+    const nextSide = isOddWeek(date) ? 'EVEN' : 'ODD';
+    const countdown = getCountdownText(date);
+    eitherInfoElem.innerHTML = `<strong>${countdown}</strong> until switch to <strong>${nextSide}</strong> side`;
   } else {
-    var side = isOdd(date) ? 'ODD' : 'EVEN';
-    sideElem.innerHTML = side + ' house numbers';
+    const side = isOddWeek(date) ? 'ODD' : 'EVEN';
+    sideElem.textContent = `${side} house numbers`;
     sideElem.classList.add(side.toLowerCase());
-    eitherInfoElem.innerHTML = '';
+    eitherInfoElem.textContent = '';
   }
-}
+};
 
-function update() {
-  var date = new Date();
-  writeDate(date);
-  writeSide(date);
-}
+/** Main update loop */
+const update = () => {
+  const now = new Date();
+  writeDate(now);
+  writeSide(now);
+};
 
-function determineWhichSideToParkOn() {
+/** Initialise the page and start the interval */
+const determineWhichSideToParkOn = () => {
   update();
   setInterval(update, 1000);
 };
 
 window.onload = determineWhichSideToParkOn;
+

@@ -17,7 +17,7 @@ Perhaps this is too presumptious, but, in the event that someone is inspired to 
 1. No additional tooling
 2. Nothing overly fancy that old-ish browsers can't handle
 3. Have fun
-4. Be nice
+  4. Be nice
 
 ### TODO
 
@@ -25,5 +25,20 @@ Perhaps this is too presumptious, but, in the event that someone is inspired to 
 - [x] Add favicon so that, if folks save this to their mobile home screen, it looks nice
 - [x] Add more information about the transition period between 4:00pm and 8:00pm on Sundays
 - [x] Add schedule beyond October 2021
-- [x] (optional) Style a little more (_remember that thing about the "the best machine..." above in
-  the "Why?" section?_)
+- [ ] (optional) Style a little more (_remember that thing about the "the best machine..." above in the "Why?" section?_) 
+
+## Development & Preview
+
+You can run the site locally without any build step:
+
+```bash
+# Python’s simple HTTP server (default, works everywhere)
+python -m http.server 8000
+
+# Or, if you have Node /npm installed, use `serve` for live‑reload
+npx serve .
+```
+
+Open <http://localhost:8000> (or the port shown by `serve`) in your browser to see the page.
+
+The project follows the conventions outlined in **AGENTS.md** – assets are snake_case, JavaScript uses modern ES6+ syntax, and the Service Worker now pre‑caches static assets for offline use.

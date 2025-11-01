@@ -1,0 +1,47 @@
+.parking-side {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+}
+
+.parking-side.odd {
+  background-color: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+}
+
+.parking-side.even {
+  background-color: var(--pico-secondary-background);
+  color: var(--pico-secondary-inverse);
+}
+
+.parking-side.either {
+  background-color: var(--pico-contrast-background);
+  color: var(--pico-contrast-inverse);
+}
+
+.countdown {
+  font-size: 1.25rem;
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.date-display {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+footer {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+#time {
+  text-align: center;
+  font-size: 0.8rem;
+  padding: 0;
+  margin: 0;
+}
