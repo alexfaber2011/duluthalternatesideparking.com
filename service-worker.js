@@ -1,4 +1,4 @@
-const CACHE_NAME = 'duluth-parking-v2';
+const CACHE_NAME = 'duluth-parking-v3';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

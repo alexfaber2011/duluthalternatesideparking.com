@@ -42,3 +42,10 @@ npx serve .
 Open <http://localhost:8000> (or the port shown by `serve`) in your browser to see the page.
 
 The project follows the conventions outlined in **AGENTS.md** – assets are snake_case, JavaScript uses modern ES6+ syntax, and the Service Worker now pre‑caches static assets for offline use.
+
+## Calendar update verification (October 30, 2026)
+
+- Opened the City of Duluth's official alternate side parking page and confirmed its latest published calendar covers November 2025 through October 2026.
+- Updated the footer to link to that official page and removed the outdated-calendar note.
+- Bumped the service worker cache version so installed copies refresh the cached page.
+- Checked the updated HTML link and JavaScript syntax. Chrome, Firefox, mobile viewport, and service worker lifecycle checks remain to be performed in a browser.
